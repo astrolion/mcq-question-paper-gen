@@ -13,7 +13,14 @@
 </head>
 <body>
     <div class="container">
-        <h1>Question Paper Generator</h1>
+        <div class="header">
+            <h1>Question Paper Generator</h1>
+            <div class="header-actions">
+                <button id="settingsBtn" class="icon-button" title="PDF Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </div>
         
         <!-- Exam Details Section -->
         <div class="exam-details">
@@ -69,10 +76,86 @@
         </div>
 
         <!-- Generate PDF Button -->
-        <button id="generatePDF" class="btn-primary">
-            <span class="material-icons">picture_as_pdf</span>
-            Generate PDF
-        </button>
+        <div class="pdf-actions">
+            <button id="generatePDF" class="btn-primary">
+                <span class="material-icons">picture_as_pdf</span>
+                Generate PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- PDF Settings Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>PDF Settings</h2>
+                <button class="close-btn" type="button">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-group">
+                    <h3>Question Format</h3>
+                    <div class="setting-item">
+                        <label>Question Font Size</label>
+                        <input type="range" id="questionFontSize" min="12" max="24" step="1" value="14">
+                        <span class="value-display">14px</span>
+                    </div>
+                    <div class="setting-item">
+                        <label>Options Font Size</label>
+                        <input type="range" id="optionFontSize" min="10" max="20" step="1" value="12">
+                        <span class="value-display">12px</span>
+                    </div>
+                    <div class="setting-item">
+                        <label>Line Spacing</label>
+                        <input type="range" id="lineSpacing" min="1" max="3" step="0.1" value="1.5">
+                        <span class="value-display">1.5</span>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <h3>Page Layout</h3>
+                    <div class="setting-item">
+                        <label>Left Margin</label>
+                        <input type="range" id="leftMargin" min="10" max="50" step="1" value="20">
+                        <span class="value-display">20px</span>
+                    </div>
+                    <div class="setting-item">
+                        <label>Right Margin</label>
+                        <input type="range" id="rightMargin" min="10" max="50" step="1" value="20">
+                        <span class="value-display">20px</span>
+                    </div>
+                    <div class="setting-item">
+                        <label>Top Margin</label>
+                        <input type="range" id="topMargin" min="10" max="50" step="1" value="20">
+                        <span class="value-display">20px</span>
+                    </div>
+                    <div class="setting-item">
+                        <label>Bottom Margin</label>
+                        <input type="range" id="bottomMargin" min="10" max="50" step="1" value="20">
+                        <span class="value-display">20px</span>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <h3>Spacing</h3>
+                    <div class="setting-item">
+                        <label>Space Between Questions</label>
+                        <input type="range" id="questionSpacing" min="10" max="40" step="1" value="20">
+                        <span class="value-display">20px</span>
+                    </div>
+                    <div class="setting-item">
+                        <label>Space Between Question and Options</label>
+                        <input type="range" id="questionOptionSpacing" min="5" max="30" step="1" value="15">
+                        <span class="value-display">15px</span>
+                    </div>
+                    <div class="setting-item">
+                        <label>Space Between Options</label>
+                        <input type="range" id="optionSpacing" min="5" max="30" step="1" value="10">
+                        <span class="value-display">10px</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn">Save Settings</button>
+            </div>
+        </div>
     </div>
 
     <!-- Question Template -->

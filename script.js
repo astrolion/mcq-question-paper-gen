@@ -7,6 +7,149 @@ document.addEventListener('DOMContentLoaded', () => {
     const examFieldsList = document.getElementById('examFieldsList');
     const addFieldBtn = document.getElementById('addField');
     const fieldTemplate = document.getElementById('fieldTemplate');
+    const settingsBtn = document.getElementById('settingsBtn');
+    const settingsModal = document.getElementById('settingsModal');
+    const closeBtn = document.querySelector('.close-btn');
+    const saveSettingsBtn = document.querySelector('.modal-footer .btn');
+
+    // PDF Settings
+    const pdfSettings = {
+        questionFontSize: 14,
+        optionFontSize: 12,
+        lineSpacing: 1.5,
+        leftMargin: 20,
+        rightMargin: 20,
+        topMargin: 20,
+        bottomMargin: 20,
+        questionSpacing: 20,
+        questionOptionSpacing: 15,
+        optionSpacing: 10
+    };
+
+    // Settings Modal Functions
+    function openSettingsModal() {
+        settingsModal.style.display = 'block';
+        
+        // Set initial values
+        document.getElementById('questionFontSize').value = pdfSettings.questionFontSize;
+        document.getElementById('optionFontSize').value = pdfSettings.optionFontSize;
+        document.getElementById('lineSpacing').value = pdfSettings.lineSpacing;
+        document.getElementById('leftMargin').value = pdfSettings.leftMargin;
+        document.getElementById('rightMargin').value = pdfSettings.rightMargin;
+        document.getElementById('topMargin').value = pdfSettings.topMargin;
+        document.getElementById('bottomMargin').value = pdfSettings.bottomMargin;
+        document.getElementById('questionSpacing').value = pdfSettings.questionSpacing;
+        document.getElementById('questionOptionSpacing').value = pdfSettings.questionOptionSpacing;
+        document.getElementById('optionSpacing').value = pdfSettings.optionSpacing;
+        
+        // Update value displays
+        updateValueDisplay('questionFontSize');
+        updateValueDisplay('optionFontSize');
+        updateValueDisplay('lineSpacing');
+        updateValueDisplay('leftMargin');
+        updateValueDisplay('rightMargin');
+        updateValueDisplay('topMargin');
+        updateValueDisplay('bottomMargin');
+        updateValueDisplay('questionSpacing');
+        updateValueDisplay('questionOptionSpacing');
+        updateValueDisplay('optionSpacing');
+    }
+
+    function closeSettingsModal() {
+        settingsModal.style.display = 'none';
+    }
+
+    function updateValueDisplay(inputId) {
+        const input = document.getElementById(inputId);
+        const display = input.nextElementSibling;
+        const value = input.value;
+        
+        // Update the display with appropriate units
+        if (inputId === 'lineSpacing') {
+            display.textContent = value;
+            display.title = `Line spacing: ${value}`;
+        } else {
+            display.textContent = `${value}px`;
+            display.title = `${inputId.replace(/([A-Z])/g, ' $1').trim()}: ${value}px`;
+        }
+        
+        // Add visual feedback
+        display.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+            display.style.transform = 'scale(1)';
+        }, 200);
+    }
+
+    function saveSettings() {
+        pdfSettings.questionFontSize = parseInt(document.getElementById('questionFontSize').value);
+        pdfSettings.optionFontSize = parseInt(document.getElementById('optionFontSize').value);
+        pdfSettings.lineSpacing = parseFloat(document.getElementById('lineSpacing').value);
+        pdfSettings.leftMargin = parseInt(document.getElementById('leftMargin').value);
+        pdfSettings.rightMargin = parseInt(document.getElementById('rightMargin').value);
+        pdfSettings.topMargin = parseInt(document.getElementById('topMargin').value);
+        pdfSettings.bottomMargin = parseInt(document.getElementById('bottomMargin').value);
+        pdfSettings.questionSpacing = parseInt(document.getElementById('questionSpacing').value);
+        pdfSettings.questionOptionSpacing = parseInt(document.getElementById('questionOptionSpacing').value);
+        pdfSettings.optionSpacing = parseInt(document.getElementById('optionSpacing').value);
+        
+        closeSettingsModal();
+    }
+
+    // Helper function to get font size in pixels
+    function getFontSize(setting, customValue) {
+        const sizes = {
+            'small': 12,
+            'medium': 14,
+            'large': 16,
+            'extra-large': 18
+        };
+        return setting === 'custom' ? customValue : sizes[setting];
+    }
+
+    // Helper function to get spacing in pixels
+    function getSpacing(setting, customValue) {
+        const spacing = {
+            'compact': 15,
+            'normal': 20,
+            'spacious': 25,
+            'extra-spacious': 30
+        };
+        return setting === 'custom' ? customValue : spacing[setting];
+    }
+
+    // Helper function to get line height
+    function getLineHeight(setting, customValue) {
+        const spacing = {
+            'compact': 1.2,
+            'normal': 1.5,
+            'spacious': 1.8,
+            'extra-spacious': 2.0
+        };
+        return setting === 'custom' ? customValue : spacing[setting];
+    }
+
+    // Helper function to get margins in pixels
+    function getMargins(setting, customValue) {
+        const margins = {
+            'narrow': 15,
+            'normal': 20,
+            'wide': 25,
+            'extra-wide': 30
+        };
+        return setting === 'custom' ? customValue : margins[setting];
+    }
+
+    // Event Listeners for Settings
+    settingsBtn.addEventListener('click', openSettingsModal);
+    closeBtn.addEventListener('click', closeSettingsModal);
+    saveSettingsBtn.addEventListener('click', saveSettings);
+
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+        if (event.target === settingsModal) {
+            closeSettingsModal();
+        }
+    });
 
     // Add new question
     addQuestionBtn.addEventListener('click', () => {
@@ -114,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Create a temporary div for PDF content
         const pdfContent = document.createElement('div');
-        pdfContent.style.padding = '40px';
+        pdfContent.style.padding = `${pdfSettings.topMargin}px ${pdfSettings.rightMargin}px ${pdfSettings.bottomMargin}px ${pdfSettings.leftMargin}px`;
         pdfContent.style.fontFamily = 'Source Sans Pro, Arial, sans-serif';
         pdfContent.style.maxWidth = '800px';
         pdfContent.style.margin = '0 auto';
@@ -149,8 +292,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fieldValue) {
                 return `
                     <div style="margin-bottom: 8px;">
-                        <span style="font-weight: 600; color: #333; font-size: 16px;">${fieldName}:</span>
-                        <span style="color: #555; font-size: 16px; margin-left: 8px;">${fieldValue}</span>
+                        <span style="font-weight: 600; color: #333; font-size: ${getFontSize(pdfSettings.questionFontSize, pdfSettings.questionFontSizeCustom)}px;">${fieldName}:</span>
+                        <span style="color: #555; font-size: ${getFontSize(pdfSettings.optionFontSize, pdfSettings.optionFontSizeCustom)}px; margin-left: 8px;">${fieldValue}</span>
                     </div>
                 `;
             }
@@ -168,55 +311,55 @@ document.addEventListener('DOMContentLoaded', () => {
             const answerText = question.querySelector('.answer-text');
             
             const questionDiv = document.createElement('div');
-            questionDiv.style.marginBottom = '30px';
+            questionDiv.style.marginBottom = `${pdfSettings.questionSpacing}px`;
             
             if (options.length > 0) {
                 // MCQ Question
                 const layoutToggle = question.querySelector('.options-layout');
-                const isSingleLine = layoutToggle ? !layoutToggle.checked : true; // Default to single line if toggle not found
+                const isSingleLine = layoutToggle ? !layoutToggle.checked : true;
                 
                 if (isSingleLine) {
                     // Single line format
                     questionDiv.innerHTML = `
-                        <div style="margin-bottom: 15px;">
-                            <p style="color: #333; font-size: 16px; line-height: 1.6;">
+                        <div style="margin-bottom: ${pdfSettings.questionOptionSpacing}px;">
+                            <p style="color: #333; font-size: ${getFontSize(pdfSettings.questionFontSize, pdfSettings.questionFontSizeCustom)}px; line-height: ${getLineHeight(pdfSettings.lineSpacing, pdfSettings.lineSpacingCustom)};">
                                 <span style="font-weight: 600;">${index + 1}.</span> ${questionText}
                             </p>
                         </div>
-                        <div style="margin-left: 20px; display: flex; gap: 20px; flex-wrap: wrap;">
-                            <p style="color: #555; font-size: 15px;">A) ${options[0].value}</p>
-                            <p style="color: #555; font-size: 15px;">B) ${options[1].value}</p>
-                            <p style="color: #555; font-size: 15px;">C) ${options[2].value}</p>
-                            <p style="color: #555; font-size: 15px;">D) ${options[3].value}</p>
+                        <div style="margin-left: 20px; display: flex; gap: ${pdfSettings.optionSpacing}px; flex-wrap: wrap;">
+                            <p style="color: #555; font-size: ${getFontSize(pdfSettings.optionFontSize, pdfSettings.optionFontSizeCustom)}px;">A) ${options[0].value}</p>
+                            <p style="color: #555; font-size: ${getFontSize(pdfSettings.optionFontSize, pdfSettings.optionFontSizeCustom)}px;">B) ${options[1].value}</p>
+                            <p style="color: #555; font-size: ${getFontSize(pdfSettings.optionFontSize, pdfSettings.optionFontSizeCustom)}px;">C) ${options[2].value}</p>
+                            <p style="color: #555; font-size: ${getFontSize(pdfSettings.optionFontSize, pdfSettings.optionFontSizeCustom)}px;">D) ${options[3].value}</p>
                         </div>
                     `;
                 } else {
                     // Multiple lines format
                     questionDiv.innerHTML = `
-                        <div style="margin-bottom: 15px;">
-                            <p style="color: #333; font-size: 16px; line-height: 1.6;">
+                        <div style="margin-bottom: ${pdfSettings.questionOptionSpacing}px;">
+                            <p style="color: #333; font-size: ${getFontSize(pdfSettings.questionFontSize, pdfSettings.questionFontSizeCustom)}px; line-height: ${getLineHeight(pdfSettings.lineSpacing, pdfSettings.lineSpacingCustom)};">
                                 <span style="font-weight: 600;">${index + 1}.</span> ${questionText}
                             </p>
                         </div>
                         <div style="margin-left: 20px;">
-                            <p style="color: #555; font-size: 15px; margin-bottom: 8px;">A) ${options[0].value}</p>
-                            <p style="color: #555; font-size: 15px; margin-bottom: 8px;">B) ${options[1].value}</p>
-                            <p style="color: #555; font-size: 15px; margin-bottom: 8px;">C) ${options[2].value}</p>
-                            <p style="color: #555; font-size: 15px; margin-bottom: 8px;">D) ${options[3].value}</p>
+                            <p style="color: #555; font-size: ${getFontSize(pdfSettings.optionFontSize, pdfSettings.optionFontSizeCustom)}px; margin-bottom: 8px;">A) ${options[0].value}</p>
+                            <p style="color: #555; font-size: ${getFontSize(pdfSettings.optionFontSize, pdfSettings.optionFontSizeCustom)}px; margin-bottom: 8px;">B) ${options[1].value}</p>
+                            <p style="color: #555; font-size: ${getFontSize(pdfSettings.optionFontSize, pdfSettings.optionFontSizeCustom)}px; margin-bottom: 8px;">C) ${options[2].value}</p>
+                            <p style="color: #555; font-size: ${getFontSize(pdfSettings.optionFontSize, pdfSettings.optionFontSizeCustom)}px; margin-bottom: 8px;">D) ${options[3].value}</p>
                         </div>
                     `;
                 }
             } else {
                 // Short Answer Question
                 questionDiv.innerHTML = `
-                    <div style="margin-bottom: 15px;">
-                        <p style="color: #333; font-size: 16px; line-height: 1.6;">
+                    <div style="margin-bottom: ${pdfSettings.questionOptionSpacing}px;">
+                        <p style="color: #333; font-size: ${getFontSize(pdfSettings.questionFontSize, pdfSettings.questionFontSizeCustom)}px; line-height: ${getLineHeight(pdfSettings.lineSpacing, pdfSettings.lineSpacingCustom)};">
                             <span style="font-weight: 600;">${index + 1}.</span> ${questionText}
                         </p>
                     </div>
                     <div style="margin-left: 20px;">
                         <div style="border-bottom: 1px solid #ccc; min-height: 100px; margin-bottom: 20px;">
-                            <p style="color: #555; font-size: 15px; margin-bottom: 8px;">Answer:</p>
+                            <p style="color: #555; font-size: ${getFontSize(pdfSettings.optionFontSize, pdfSettings.optionFontSizeCustom)}px; margin-bottom: 8px;">Answer:</p>
                             <div style="height: 80px;"></div>
                         </div>
                     </div>
@@ -265,5 +408,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Remove temporary content
         document.body.removeChild(pdfContent);
+    });
+
+    // Add event listeners for range inputs
+    const rangeInputs = document.querySelectorAll('input[type="range"]');
+    rangeInputs.forEach(input => {
+        // Update on input (while sliding)
+        input.addEventListener('input', function() {
+            updateValueDisplay(this.id);
+        });
+        
+        // Update on change (when released)
+        input.addEventListener('change', function() {
+            updateValueDisplay(this.id);
+        });
     });
 }); 
