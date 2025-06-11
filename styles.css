@@ -292,12 +292,16 @@ h3 {
 
 .question-buttons {
     display: flex;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: nowrap;
 }
 
 .question-buttons .btn-primary {
     flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    justify-content: center;
 }
 
 .answer-space {
@@ -594,4 +598,36 @@ h3 {
 
 .modal-footer .btn:hover {
     background: #1565c0;
+}
+
+.add-question-buttons {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.add-question-btn {
+    padding: 12px 24px;
+    font-size: 1rem;
+    min-width: 200px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+}
+
+.add-question-btn:hover {
+    background-color: #45a049;
+}
+
+.add-question-btn i {
+    font-size: 1.1rem;
 } 
