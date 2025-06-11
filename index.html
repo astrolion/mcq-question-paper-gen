@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Paper Generator</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Sans+Pro:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mui/material@5.15.0/dist/css/material.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Question Paper Generator</h1>
+        
+        <!-- Exam Details Section -->
+        <div class="exam-details">
+            <h2>Exam Details</h2>
+            <div class="form-group">
+                <div id="examFieldsList">
+                    <!-- Default fields -->
+                    <div class="field-row">
+                        <div class="field-inputs">
+                            <input type="text" class="field-name" value="Exam Name" readonly>
+                            <input type="text" id="examName" placeholder="Enter exam name" class="form-control">
+                        </div>
+                        <span class="material-icons remove-field">close</span>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-inputs">
+                            <input type="text" class="field-name" value="Full Marks" readonly>
+                            <input type="text" id="fullMarks" placeholder="Enter total marks" class="form-control">
+                        </div>
+                        <span class="material-icons remove-field">close</span>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-inputs">
+                            <input type="text" class="field-name" value="Subject" readonly>
+                            <input type="text" id="subject" placeholder="Enter subject name" class="form-control">
+                        </div>
+                        <span class="material-icons remove-field">close</span>
+                    </div>
+                </div>
+                
+                <!-- Add Field Button -->
+                <button id="addField" class="btn-secondary">
+                    <span class="material-icons">add</span>
+                    Add Field
+                </button>
+            </div>
+        </div>
+
+        <!-- Questions Section -->
+        <div class="questions-section">
+            <h2>Questions</h2>
+            <div id="questionsList"></div>
+            <button id="addQuestion" class="btn-primary">
+                <span class="material-icons">add</span>
+                Add Question
+            </button>
+        </div>
+
+        <!-- Generate PDF Button -->
+        <button id="generatePDF" class="btn-primary">
+            <span class="material-icons">picture_as_pdf</span>
+            Generate PDF
+        </button>
+    </div>
+
+    <!-- Question Template -->
+    <template id="questionTemplate">
+        <div class="question-card">
+            <div class="form-group">
+                <textarea class="question-text" placeholder="Enter your question"></textarea>
+                <div class="options">
+                    <input type="text" class="option" placeholder="Option A">
+                    <input type="text" class="option" placeholder="Option B">
+                    <input type="text" class="option" placeholder="Option C">
+                    <input type="text" class="option" placeholder="Option D">
+                </div>
+                <select class="correct-answer">
+                    <option value="">Select Correct Answer</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+                <button class="btn-remove">
+                    <span class="material-icons">delete</span>
+                    Remove Question
+                </button>
+            </div>
+        </div>
+    </template>
+
+    <!-- Field Template -->
+    <template id="fieldTemplate">
+        <div class="field-row">
+            <div class="field-inputs">
+                <input type="text" class="field-name" placeholder="Enter field name">
+                <input type="text" class="field-value" placeholder="Enter field value">
+            </div>
+            <span class="material-icons remove-field">close</span>
+        </div>
+    </template>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
