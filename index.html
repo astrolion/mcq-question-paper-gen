@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Sans+Pro:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mui/material@5.15.0/dist/css/material.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -17,7 +18,7 @@
             <h1>Question Paper Generator</h1>
             <div class="header-actions">
                 <button id="settingsBtn" class="icon-button" title="PDF Settings">
-                    <i class="fas fa-cog"></i>
+                    <i class="fas fa-gear fa-spin-hover"></i>
                 </button>
             </div>
         </div>
@@ -96,12 +97,12 @@
                     <h3>Question Format</h3>
                     <div class="setting-item">
                         <label>Question Font Size</label>
-                        <input type="range" id="questionFontSize" min="12" max="24" step="1" value="14">
+                        <input type="range" id="questionFontSize" min="1" max="24" step="1" value="14">
                         <span class="value-display">14px</span>
                     </div>
                     <div class="setting-item">
                         <label>Options Font Size</label>
-                        <input type="range" id="optionFontSize" min="10" max="20" step="1" value="12">
+                        <input type="range" id="optionFontSize" min="1" max="20" step="1" value="12">
                         <span class="value-display">12px</span>
                     </div>
                     <div class="setting-item">
@@ -114,22 +115,22 @@
                     <h3>Page Layout</h3>
                     <div class="setting-item">
                         <label>Left Margin</label>
-                        <input type="range" id="leftMargin" min="10" max="50" step="1" value="20">
+                        <input type="range" id="leftMargin" min="1" max="50" step="1" value="20">
                         <span class="value-display">20px</span>
                     </div>
                     <div class="setting-item">
                         <label>Right Margin</label>
-                        <input type="range" id="rightMargin" min="10" max="50" step="1" value="20">
+                        <input type="range" id="rightMargin" min="1" max="50" step="1" value="20">
                         <span class="value-display">20px</span>
                     </div>
                     <div class="setting-item">
                         <label>Top Margin</label>
-                        <input type="range" id="topMargin" min="10" max="50" step="1" value="20">
+                        <input type="range" id="topMargin" min="1" max="50" step="1" value="20">
                         <span class="value-display">20px</span>
                     </div>
                     <div class="setting-item">
                         <label>Bottom Margin</label>
-                        <input type="range" id="bottomMargin" min="10" max="50" step="1" value="20">
+                        <input type="range" id="bottomMargin" min="1" max="50" step="1" value="20">
                         <span class="value-display">20px</span>
                     </div>
                 </div>
@@ -137,18 +138,23 @@
                     <h3>Spacing</h3>
                     <div class="setting-item">
                         <label>Space Between Questions</label>
-                        <input type="range" id="questionSpacing" min="10" max="40" step="1" value="20">
+                        <input type="range" id="questionSpacing" min="1" max="40" step="1" value="20">
                         <span class="value-display">20px</span>
                     </div>
                     <div class="setting-item">
                         <label>Space Between Question and Options</label>
-                        <input type="range" id="questionOptionSpacing" min="5" max="30" step="1" value="15">
+                        <input type="range" id="questionOptionSpacing" min="1" max="30" step="1" value="15">
                         <span class="value-display">15px</span>
                     </div>
                     <div class="setting-item">
-                        <label>Space Between Options</label>
-                        <input type="range" id="optionSpacing" min="5" max="30" step="1" value="10">
+                        <label>Space Between Single Line Options</label>
+                        <input type="range" id="singleLineOptionSpacing" min="1" max="30" step="1" value="10">
                         <span class="value-display">10px</span>
+                    </div>
+                    <div class="setting-item">
+                        <label>Space Between Multiple Line Options</label>
+                        <input type="range" id="multiLineOptionSpacing" min="1" max="30" step="1" value="8">
+                        <span class="value-display">8px</span>
                     </div>
                 </div>
             </div>

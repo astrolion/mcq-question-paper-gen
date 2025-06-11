@@ -355,17 +355,18 @@ h3 {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
+    overflow-y: auto;
 }
 
 .modal-content {
-    position: relative;
-    background-color: #fff;
-    margin: 50px auto;
+    background: #f8f9fa;
+    margin: 2% auto;
     padding: 0;
-    width: 90%;
-    max-width: 600px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 75%;
+    max-width: 1200px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    position: relative;
 }
 
 .modal-header {
@@ -394,9 +395,12 @@ h3 {
 }
 
 .modal-body {
-    padding: 20px;
+    padding: 30px;
     max-height: 80vh;
     overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
 }
 
 .modal-footer {
@@ -406,10 +410,21 @@ h3 {
 }
 
 .settings-group {
-    margin-bottom: 30px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.settings-group:last-child {
+.setting-item {
+    margin-bottom: 25px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.setting-item:last-child {
     margin-bottom: 0;
 }
 
@@ -494,14 +509,20 @@ h3 {
 
 .icon-button i {
     font-size: 32px;
+    transition: transform 0.3s ease;
 }
 
-.setting-item {
-    margin-bottom: 25px;
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+.fa-spin-hover:hover {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .setting-item label {
@@ -551,59 +572,12 @@ h3 {
     border-radius: 4px;
 }
 
-.settings-group {
-    margin-bottom: 30px;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
 .settings-group h3 {
     color: #1976d2;
     margin-bottom: 20px;
     font-size: 18px;
     border-bottom: 2px solid #e3f2fd;
     padding-bottom: 10px;
-}
-
-.modal-content {
-    background: #f8f9fa;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-}
-
-.modal-header {
-    background: #1976d2;
-    color: white;
-    padding: 20px;
-    border-radius: 12px 12px 0 0;
-}
-
-.modal-header h2 {
-    margin: 0;
-    font-size: 24px;
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 28px;
-    cursor: pointer;
-    padding: 0;
-    line-height: 1;
-}
-
-.modal-body {
-    padding: 30px;
-}
-
-.modal-footer {
-    padding: 20px;
-    background: #f8f9fa;
-    border-top: 1px solid #e0e0e0;
-    border-radius: 0 0 12px 12px;
 }
 
 .modal-footer .btn {

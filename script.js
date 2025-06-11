@@ -23,7 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
         bottomMargin: 20,
         questionSpacing: 20,
         questionOptionSpacing: 15,
-        optionSpacing: 10
+        singleLineOptionSpacing: 10,
+        multiLineOptionSpacing: 8
     };
 
     // Settings Modal Functions
@@ -40,7 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('bottomMargin').value = pdfSettings.bottomMargin;
         document.getElementById('questionSpacing').value = pdfSettings.questionSpacing;
         document.getElementById('questionOptionSpacing').value = pdfSettings.questionOptionSpacing;
-        document.getElementById('optionSpacing').value = pdfSettings.optionSpacing;
+        document.getElementById('singleLineOptionSpacing').value = pdfSettings.singleLineOptionSpacing;
+        document.getElementById('multiLineOptionSpacing').value = pdfSettings.multiLineOptionSpacing;
         
         // Update value displays
         updateValueDisplay('questionFontSize');
@@ -52,7 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
         updateValueDisplay('bottomMargin');
         updateValueDisplay('questionSpacing');
         updateValueDisplay('questionOptionSpacing');
-        updateValueDisplay('optionSpacing');
+        updateValueDisplay('singleLineOptionSpacing');
+        updateValueDisplay('multiLineOptionSpacing');
     }
 
     function closeSettingsModal() {
@@ -90,7 +93,8 @@ document.addEventListener('DOMContentLoaded', () => {
         pdfSettings.bottomMargin = parseInt(document.getElementById('bottomMargin').value);
         pdfSettings.questionSpacing = parseInt(document.getElementById('questionSpacing').value);
         pdfSettings.questionOptionSpacing = parseInt(document.getElementById('questionOptionSpacing').value);
-        pdfSettings.optionSpacing = parseInt(document.getElementById('optionSpacing').value);
+        pdfSettings.singleLineOptionSpacing = parseInt(document.getElementById('singleLineOptionSpacing').value);
+        pdfSettings.multiLineOptionSpacing = parseInt(document.getElementById('multiLineOptionSpacing').value);
         
         closeSettingsModal();
     }
@@ -326,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <span style="font-weight: 600;">${index + 1}.</span> ${questionText}
                             </p>
                         </div>
-                        <div style="margin-left: 20px; display: flex; gap: ${pdfSettings.optionSpacing}px; flex-wrap: wrap;">
+                        <div style="margin-left: 20px; display: flex; gap: ${pdfSettings.singleLineOptionSpacing}px; flex-wrap: wrap;">
                             <p style="color: #555; font-size: ${getFontSize(pdfSettings.optionFontSize, pdfSettings.optionFontSizeCustom)}px;">A) ${options[0].value}</p>
                             <p style="color: #555; font-size: ${getFontSize(pdfSettings.optionFontSize, pdfSettings.optionFontSizeCustom)}px;">B) ${options[1].value}</p>
                             <p style="color: #555; font-size: ${getFontSize(pdfSettings.optionFontSize, pdfSettings.optionFontSizeCustom)}px;">C) ${options[2].value}</p>
