@@ -275,4 +275,53 @@ h3 {
 
 #addCustomField {
     margin-top: 10px;
+}
+
+.question-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.question-buttons .btn-primary {
+    flex: 1;
+}
+
+.answer-space {
+    margin: 15px 0;
+}
+
+.answer-space textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.options-header {
+    margin-bottom: 10px;
+}
+
+.layout-toggle {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    user-select: none;
+    color: #666;
+}
+
+.layout-toggle input[type="checkbox"] {
+    margin: 0;
+}
+
+.layout-toggle .material-icons {
+    font-size: 20px;
+}
+
+.layout-text {
+    font-size: 14px;
 } 

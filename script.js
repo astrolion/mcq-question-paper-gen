@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const questionsList = document.getElementById('questionsList');
     const addQuestionBtn = document.getElementById('addQuestion');
+    const addShortAnswerBtn = document.getElementById('addShortAnswer');
     const generatePDFBtn = document.getElementById('generatePDF');
     const questionTemplate = document.getElementById('questionTemplate');
     const examFieldsList = document.getElementById('examFieldsList');
@@ -11,6 +12,30 @@ document.addEventListener('DOMContentLoaded', () => {
     addQuestionBtn.addEventListener('click', () => {
         const questionCard = questionTemplate.content.cloneNode(true);
         questionsList.appendChild(questionCard);
+        
+        // Add layout toggle functionality
+        const layoutToggle = questionsList.lastElementChild.querySelector('.options-layout');
+        const singleLineIcon = questionsList.lastElementChild.querySelector('.single-line-icon');
+        const multiLineIcon = questionsList.lastElementChild.querySelector('.multi-line-icon');
+        const layoutText = questionsList.lastElementChild.querySelector('.layout-text');
+        
+        layoutToggle.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                singleLineIcon.style.display = 'none';
+                multiLineIcon.style.display = 'inline';
+                layoutText.textContent = 'Multiple Lines';
+            } else {
+                singleLineIcon.style.display = 'inline';
+                multiLineIcon.style.display = 'none';
+                layoutText.textContent = 'Single Line';
+            }
+        });
+        
+        // Add remove functionality
+        const removeButton = questionsList.lastElementChild.querySelector('.btn-remove');
+        removeButton.addEventListener('click', () => {
+            questionsList.lastElementChild.remove();
+        });
     });
 
     // Remove question
@@ -47,6 +72,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 fieldRow.remove();
             }
         }
+    });
+
+    // Add Short Answer Question
+    addShortAnswerBtn.addEventListener('click', () => {
+        const questionsList = document.getElementById('questionsList');
+        const shortAnswerCard = document.createElement('div');
+        shortAnswerCard.className = 'question-card';
+        shortAnswerCard.innerHTML = `
+            <div class="form-group">
+                <textarea class="question-text" placeholder="Enter your question"></textarea>
+                <div class="answer-space">
+                    <textarea class="answer-text" placeholder="Enter expected answer"></textarea>
+                </div>
+                <button class="btn-remove">
+                    <span class="material-icons">delete</span>
+                    Remove Question
+                </button>
+            </div>
+        `;
+        
+        // Add the question card to the list
+        questionsList.appendChild(shortAnswerCard);
+        
+        // Add remove functionality
+        const removeButton = shortAnswerCard.querySelector('.btn-remove');
+        removeButton.addEventListener('click', () => {
+            shortAnswerCard.remove();
+        });
     });
 
     // Generate PDF
@@ -104,23 +157,64 @@ document.addEventListener('DOMContentLoaded', () => {
         const questions = document.querySelectorAll('.question-card');
         questions.forEach((question, index) => {
             const questionText = question.querySelector('.question-text').value;
-            const options = Array.from(question.querySelectorAll('.option')).map(opt => opt.value);
+            const options = Array.from(question.querySelectorAll('.option'));
+            const answerText = question.querySelector('.answer-text');
             
             const questionDiv = document.createElement('div');
             questionDiv.style.marginBottom = '30px';
-            questionDiv.innerHTML = `
-                <div style="margin-bottom: 15px;">
-                    <p style="color: #333; font-size: 16px; line-height: 1.6;">
-                        <span style="font-weight: 600;">${index + 1}.</span> ${questionText}
-                    </p>
-                </div>
-                <div style="margin-left: 20px;">
-                    <p style="color: #555; font-size: 15px; margin-bottom: 8px;">A) ${options[0]}</p>
-                    <p style="color: #555; font-size: 15px; margin-bottom: 8px;">B) ${options[1]}</p>
-                    <p style="color: #555; font-size: 15px; margin-bottom: 8px;">C) ${options[2]}</p>
-                    <p style="color: #555; font-size: 15px; margin-bottom: 8px;">D) ${options[3]}</p>
-                </div>
-            `;
+            
+            if (options.length > 0) {
+                // MCQ Question
+                const layoutToggle = question.querySelector('.options-layout');
+                const isSingleLine = layoutToggle ? !layoutToggle.checked : true; // Default to single line if toggle not found
+                
+                if (isSingleLine) {
+                    // Single line format
+                    questionDiv.innerHTML = `
+                        <div style="margin-bottom: 15px;">
+                            <p style="color: #333; font-size: 16px; line-height: 1.6;">
+                                <span style="font-weight: 600;">${index + 1}.</span> ${questionText}
+                            </p>
+                        </div>
+                        <div style="margin-left: 20px; display: flex; gap: 20px; flex-wrap: wrap;">
+                            <p style="color: #555; font-size: 15px;">A) ${options[0].value}</p>
+                            <p style="color: #555; font-size: 15px;">B) ${options[1].value}</p>
+                            <p style="color: #555; font-size: 15px;">C) ${options[2].value}</p>
+                            <p style="color: #555; font-size: 15px;">D) ${options[3].value}</p>
+                        </div>
+                    `;
+                } else {
+                    // Multiple lines format
+                    questionDiv.innerHTML = `
+                        <div style="margin-bottom: 15px;">
+                            <p style="color: #333; font-size: 16px; line-height: 1.6;">
+                                <span style="font-weight: 600;">${index + 1}.</span> ${questionText}
+                            </p>
+                        </div>
+                        <div style="margin-left: 20px;">
+                            <p style="color: #555; font-size: 15px; margin-bottom: 8px;">A) ${options[0].value}</p>
+                            <p style="color: #555; font-size: 15px; margin-bottom: 8px;">B) ${options[1].value}</p>
+                            <p style="color: #555; font-size: 15px; margin-bottom: 8px;">C) ${options[2].value}</p>
+                            <p style="color: #555; font-size: 15px; margin-bottom: 8px;">D) ${options[3].value}</p>
+                        </div>
+                    `;
+                }
+            } else {
+                // Short Answer Question
+                questionDiv.innerHTML = `
+                    <div style="margin-bottom: 15px;">
+                        <p style="color: #333; font-size: 16px; line-height: 1.6;">
+                            <span style="font-weight: 600;">${index + 1}.</span> ${questionText}
+                        </p>
+                    </div>
+                    <div style="margin-left: 20px;">
+                        <div style="border-bottom: 1px solid #ccc; min-height: 100px; margin-bottom: 20px;">
+                            <p style="color: #555; font-size: 15px; margin-bottom: 8px;">Answer:</p>
+                            <div style="height: 80px;"></div>
+                        </div>
+                    </div>
+                `;
+            }
             pdfContent.appendChild(questionDiv);
         });
 

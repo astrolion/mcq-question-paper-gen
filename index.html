@@ -56,10 +56,16 @@
         <div class="questions-section">
             <h2>Questions</h2>
             <div id="questionsList"></div>
-            <button id="addQuestion" class="btn-primary">
-                <span class="material-icons">add</span>
-                Add Question
-            </button>
+            <div class="question-buttons">
+                <button id="addQuestion" class="btn-primary">
+                    <span class="material-icons">add</span>
+                    Add MCQ Question
+                </button>
+                <button id="addShortAnswer" class="btn-primary">
+                    <span class="material-icons">add</span>
+                    Add Short Answer Question
+                </button>
+            </div>
         </div>
 
         <!-- Generate PDF Button -->
@@ -75,6 +81,14 @@
             <div class="form-group">
                 <textarea class="question-text" placeholder="Enter your question"></textarea>
                 <div class="options">
+                    <div class="options-header">
+                        <label class="layout-toggle">
+                            <input type="checkbox" class="options-layout">
+                            <span class="material-icons single-line-icon">view_agenda</span>
+                            <span class="material-icons multi-line-icon" style="display: none;">view_list</span>
+                            <span class="layout-text">Single Line Options</span>
+                        </label>
+                    </div>
                     <input type="text" class="option" placeholder="Option A">
                     <input type="text" class="option" placeholder="Option B">
                     <input type="text" class="option" placeholder="Option C">
