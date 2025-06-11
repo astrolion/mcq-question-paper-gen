@@ -104,6 +104,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Generate PDF
     generatePDFBtn.addEventListener('click', async () => {
+        // Validate exam name
+        const examNameField = document.querySelector('#examName');
+        if (!examNameField.value.trim()) {
+            alert('Please enter an exam name');
+            examNameField.focus();
+            return;
+        }
+
         // Create a temporary div for PDF content
         const pdfContent = document.createElement('div');
         pdfContent.style.padding = '40px';
@@ -120,8 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
         header.style.paddingBottom = '20px';
 
         // Get exam name value
-        const examNameField = document.querySelector('#examName');
-        const examName = examNameField ? examNameField.value : '';
+        const examName = examNameField.value;
         
         // Add exam name as title if it exists
         if (examName) {

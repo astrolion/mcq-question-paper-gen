@@ -64,6 +64,19 @@ h3 {
     outline: none;
 }
 
+.form-control:required {
+    border-left: 3px solid #1976d2;
+}
+
+.form-control:required:invalid {
+    border-left: 3px solid #d32f2f;
+}
+
+.form-control:required:focus {
+    border-left: 3px solid #1976d2;
+    outline: none;
+}
+
 .btn-primary {
     background-color: #1976d2;
     color: white;
